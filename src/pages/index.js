@@ -20,6 +20,7 @@ const IndexPage = () => (
               data={node.frontmatter.data}
               body={node.excerpt}
               path={node.frontmatter.path}
+              fluid={node.frontmatter.image.childImageSharp.fluid}
             />
           ))}
         </div>
@@ -38,6 +39,13 @@ query{
           data(formatString: "MMM Do YYYY")
           author
           path
+          image {
+            childImageSharp {
+              fluid(maxWidth: 600) {
+                ...GatsbyImageSharpFluid
+              }
+            }
+          }
         }
         excerpt
       }
