@@ -21,11 +21,12 @@ const IndexPage = () => (
             <div>
               {data.allMarkdownRemark.edges.map(({ node }) => (
                 <Post
+                  key={node.id}
                   title={node.frontmatter.title}
                   author={node.frontmatter.author}
-                  data={node.frontmatter.data}
+                  date={node.frontmatter.date}
                   body={node.excerpt}
-                  path={node.frontmatter.path}
+                  slug={node.fields.slug}
                   fluid={node.frontmatter.image.childImageSharp.fluid}
                   tags={node.frontmatter.tags}
                 />
@@ -43,14 +44,14 @@ const IndexPage = () => (
 
 const indexQuery = graphql`
 query{
-  allMarkdownRemark(sort: { fields: [frontmatter___data], order: DESC }){
+  allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }){
     edges{
       node{
+        id
         frontmatter{
           title
-          data(formatString: "MMM Do YYYY")
+          date(formatString: "MMM Do YYYY")
           author
-          path
           tags
           image {
             childImageSharp {
@@ -59,6 +60,9 @@ query{
               }
             }
           }
+        }
+        fields{
+          slug
         }
         excerpt
       }

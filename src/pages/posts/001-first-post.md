@@ -1,9 +1,8 @@
 ---
 title: 'First post - introduction'
-data: 2018-12-01 07:00:00
+date: 2018-12-01 07:00:00
 author: 'John Dou'
-path: '/first-post'
-image: ../../images/bg.jpg
+image: ../../images/boy.jpeg
 tags:
  - code
  - web

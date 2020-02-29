@@ -1,9 +1,8 @@
 ---
 title: 'Third post - Some text'
-data: 2018-12-03 07:00:00
+date: 2018-12-03 07:00:00
 author: 'John Dou'
-path: '/third-post'
-image: ../../images/bg.jpg
+image: ../../images/aise.jpg
 tags:
  - third
  - html
