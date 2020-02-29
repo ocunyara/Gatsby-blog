@@ -7,6 +7,8 @@ import SEO from "../components/seo"
 
 import { Row, Col } from 'reactstrap';
 
+import { Sidebar } from '../components/Sidebar'
+
 const IndexPage = () => (
 
   <Layout>
@@ -33,7 +35,7 @@ const IndexPage = () => (
         }}></StaticQuery>
       </Col>
       <Col md="4">
-        <div style={{width: "100%", height: "100%", background: "#999"}}></div>
+        <Sidebar></Sidebar>
       </Col>
     </Row>
   </Layout>
