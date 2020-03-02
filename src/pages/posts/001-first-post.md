@@ -1,7 +1,7 @@
 ---
 title: 'First post - introduction'
 date: 2018-12-01 07:00:00
-author: 'John Dou'
+author: 'John Doe'
 image: ../../images/boy.jpeg
 tags:
  - code

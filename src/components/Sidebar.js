@@ -1,51 +1,61 @@
 import React from 'react'
-import { Card, CardTitle, CardBody, Form, FormGroup, Input } from 'reactstrap'
+import { Card, CardTitle,CardText, CardBody, Form, FormGroup, Input } from 'reactstrap'
 
 import { graphql, StaticQuery } from "gatsby";
 import Img from 'gatsby-image'
 import { Link } from 'gatsby'
 
-export const Sidebar = () => {
-  return (
-    <div>
+const Sidebar = ({ author, authorFluid }) => (
+  <div>
+    {author && (
       <Card>
+        <Img className="card-image-top" fluid={authorFluid} />
         <CardBody>
           <CardTitle className="text-center text-uppercase mb-3">
-            Newsletter
+            {author.name}
           </CardTitle>
-          <Form className="text-center">
-            <FormGroup>
-              <Input type="email" name="email" className="style-input" placeholder="Email"/>
-            </FormGroup>
-          </Form>
+          <CardText>{author.bio}</CardText>
         </CardBody>
       </Card>
-      <Card>
-        <CardBody>
-          <CardTitle className="text-center text-uppercase">
-            Recent Posts
-          </CardTitle>
-          <StaticQuery query={sidebarQuery} render={data => {
-            return (
-              <div>
-                {data.allMarkdownRemark.edges.map(({ node }) => (
-                  <Card key={node.id} >
-                    <Link to={`/${node.fields.slug}`}>
-                      <Img className="card-image-top" fluid={node.frontmatter.image.childImageSharp.fluid}/>
-                    </Link>
-                    <CardBody>
-                      <CardTitle><Link to={`/${node.fields.slug}`}>{node.frontmatter.title}</Link></CardTitle>
-                    </CardBody>
-                  </Card>
-                ))}
-              </div>
-            )
-          }}></StaticQuery>
-        </CardBody>
-      </Card>
-    </div>
-  )
-}
+    )}
+    <Card>
+      <CardBody>
+        <CardTitle className="text-center text-uppercase mb-3">
+          Newsletter
+        </CardTitle>
+        <Form className="text-center">
+          <FormGroup>
+            <Input type="email" name="email" className="style-input" placeholder="Email"/>
+          </FormGroup>
+        </Form>
+      </CardBody>
+    </Card>
+    <Card>
+      <CardBody>
+        <CardTitle className="text-center text-uppercase">
+          Recent Posts
+        </CardTitle>
+        <StaticQuery query={sidebarQuery} render={data => {
+          return (
+            <div>
+              {data.allMarkdownRemark.edges.map(({ node }) => (
+                <Card key={node.id} >
+                  <Link to={`/${node.fields.slug}`}>
+                    <Img className="card-image-top" fluid={node.frontmatter.image.childImageSharp.fluid}/>
+                  </Link>
+                  <CardBody>
+                    <CardTitle><Link to={`/${node.fields.slug}`}>{node.frontmatter.title}</Link></CardTitle>
+                  </CardBody>
+                </Card>
+              ))}
+            </div>
+          )
+        }}></StaticQuery>
+      </CardBody>
+    </Card>
+  </div>
+)
+
 
 const sidebarQuery = graphql`
   query sidebarQuery {
@@ -74,3 +84,5 @@ const sidebarQuery = graphql`
     }
   }
 `
+
+export default Sidebar

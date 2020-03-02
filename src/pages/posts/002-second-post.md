@@ -1,7 +1,7 @@
 ---
 title: 'Second post - HTML'
 date: 2018-12-02 07:00:00
-author: 'John Dou'
+author: 'John Doe'
 image: ../../images/bg.jpg
 tags:
  - code

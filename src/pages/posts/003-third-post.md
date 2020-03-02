@@ -1,7 +1,7 @@
 ---
 title: 'Third post - Some text'
 date: 2018-12-03 07:00:00
-author: 'John Dou'
+author: 'Jane Doe'
 image: ../../images/aise.jpg
 tags:
  - third

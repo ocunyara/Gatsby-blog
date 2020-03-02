@@ -4,14 +4,14 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 import { Row, Col } from 'reactstrap'
 
-import { Sidebar } from '../components/Sidebar'
+import Sidebar from '../components/Sidebar'
 
 import '../styles/index.scss'
 
 import Header from "./header"
 import SEO from "./seo";
 
-const Layout = ({ children, pageTitle }) => {
+const Layout = ({ authorImageFluid, children, pageTitle, postAuthor }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -31,7 +31,7 @@ const Layout = ({ children, pageTitle }) => {
         <Row>
           <Col md="8">{children}</Col>
           <Col md="4">
-            <Sidebar />
+            <Sidebar author={postAuthor} authorFluid={authorImageFluid} />
           </Col>
         </Row>
       </div>
