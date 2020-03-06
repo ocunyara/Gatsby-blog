@@ -1,6 +1,8 @@
 const path = require('path')
 const { slugify } = require('./src/util/utility');
 
+const _ = require('lodash')
+
 const authors = require('./src/util/authors')
 
 exports.onCreateNode = ({ node, actions }) => {
@@ -17,7 +19,11 @@ exports.onCreateNode = ({ node, actions }) => {
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
-  const singlePostTemplate = path.resolve('src/templates/single-post.js')
+
+  const tamplates = {
+    singlePost: path.resolve('src/templates/single-post.js'),
+    tagsPage: path.resolve('src/templates/tags-page.js')
+  }
 
   return graphql(`
     {
@@ -43,7 +49,7 @@ exports.createPages = ({ actions, graphql }) => {
     posts.forEach(({ node }) => {
       createPage({
         path: node.fields.slug,
-        component: singlePostTemplate,
+        component: tamplates.singlePost,
         context: {
           // Passing slug for template to use to fetch the post
           slug: node.fields.slug,
@@ -52,8 +58,34 @@ exports.createPages = ({ actions, graphql }) => {
       })
     })
 
+    // Get all tags
+    let tags = []
+    _.each(posts, edge => {
+      if (_.get(edge, 'node.frontmatter.tags')) {
+        tags = tags.concat(edge.node.frontmatter.tags)
+      }
+    })
+
+    let tagPostCounts = {} // { tutorial: 2, design: 1}
+    tags.forEach(tag => {
+      // Or 0 cause it might not exist yet
+      tagPostCounts[tag] = (tagPostCounts[tag] || 0) + 1
+    })
+
+    // Remove duplicates
+    tags = _.uniq(tags)
+
+    // Tags page (all tags)
+    createPage({
+      path: '/tags',
+      component: templates.tagsPage,
+      context: {
+        tags,
+        tagPostCounts,
+      },
+    })
   })
-}
+};
 
 
 // You can delete this file if you're not using it
