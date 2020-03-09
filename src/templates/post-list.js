@@ -4,14 +4,14 @@ import { Post } from "../components/Post";
 
 import { graphql } from 'gatsby'
 
-const tagPost = ({data, pageContext}) => {
-  const { tag } = pageContext
-  const { totalCount } = data.allMarkdownRemark
-  const pageHeader = `${totalCount} post${totalCount === 1 ? '' : 's'} tagged with "${tag}"`
 
-  return (
-    <Layout pageTitle={pageHeader}>
-      {data.allMarkdownRemark.edges.map(({node}) => (
+const postList = (props) => {
+  const posts = props.data.allMarkdownRemark.edges
+  const { currentPage } = props.pageContext
+
+  return(
+    <Layout pageTitle={`Page: ${currentPage}`}>
+      {posts.map(({node}) => (
         <Post key={node.id}
               slug={node.fields.slug}
               author={node.frontmatter.author}
@@ -26,13 +26,13 @@ const tagPost = ({data, pageContext}) => {
   )
 };
 
-export const tagQuery = graphql`
-  query($tag: String!){
+  export const postListQuery = graphql`
+  query postListQuery($skip: Int!, $limit: Int!){
     allMarkdownRemark(
-      sort: { fields: [frontmatter___date] }
-      filter: {frontmatter: {tags: {in: [$tag]}}} 
+      sort: { fields: [frontmatter___date], order: DESC }
+      limit: $limit
+      skip: $skip 
     ){
-      totalCount
       edges{
         node{
           id
@@ -59,4 +59,5 @@ export const tagQuery = graphql`
   }
 `;
 
-export default tagPost
+
+export default postList
